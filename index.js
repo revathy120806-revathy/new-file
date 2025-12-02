@@ -18,7 +18,7 @@ app.get("/",(req,resp)=>{
 resp.sendFile(absPath)
 console.log(absPath)
 const folderName='img'
-app.use(express.static(path.join(pathName,folderName)))
+app.use('/img',express.static(path.join(pathName,'img')))
 console.log((path.join(pathName,folderName)));
 
 })
