@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 
 
 const app=express()
@@ -45,10 +45,6 @@ resp.sendFile(absPath)
 
 })
 
-AOS.init({
-  duration: 1000, // animation duration in ms
-  once: false,    // whether animation should happen only once
 
-});
 
 app.listen(3200)
