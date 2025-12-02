@@ -3,14 +3,15 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import AOS from 'aos';
 
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app=express()
 app.set("view engine","ejs")
 const pathName=path.resolve('assets')
-const imgPath=path.resolve('public')
+const imgPath=path.resolve(__dirname)
 const folderName='img'
-app.use(express.static(path.join(pathName,folderName)))
+//app.use(express.static(path.join(pathName,folderName)))
 
 
 app.get("/",(req,resp)=>{
