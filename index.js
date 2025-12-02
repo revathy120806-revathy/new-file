@@ -8,12 +8,19 @@ import AOS from 'aos';
 const app=express()
 app.set("view engine","ejs")
 const pathName=path.resolve('assets')
-app.use(express.static(pathName))
+
+const folderName='img'
+app.use(express.static(path.join(pathName,folderName)))
+
 
 app.get("/",(req,resp)=>{
  const absPath=path.resolve('index.html')
 resp.sendFile(absPath)
 console.log(absPath)
+const folderName='img'
+app.use(express.static(path.join(pathName,folderName)))
+console.log((path.join(pathName,folderName)));
+
 })
 
 
