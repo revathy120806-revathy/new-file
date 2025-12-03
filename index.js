@@ -40,7 +40,7 @@ const subject=req.body.subject
 const message=req.body.message
 const collection=db.collection('department')
 const result=await collection.insertOne({name,email,subject,message})   
-resp.send('/Datasheet')
+resp.send('Datasheet.html')
 })
 
 
