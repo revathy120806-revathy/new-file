@@ -29,7 +29,7 @@ $path = str_replace('/forms', '', $path); // adjust if needed
 
 // Router: match path to handler
 switch ($path) {
-    case '/contact':
+    case '/forms/contact.php':
     case '/Datasheet':
         handleContact($method);
         break;
