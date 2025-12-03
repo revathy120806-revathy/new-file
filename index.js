@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.post("/Datasheet",async(req,resp)=>{
+app.post("/new-file/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
@@ -43,7 +43,7 @@ const result=await collection.insertOne({name,email,subject,message})
 resp.redirect('/contact.html')
 })
 
-app.get("/Datasheet",async(req,resp)=>{
+app.get("/new-file/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
@@ -174,11 +174,6 @@ console.log(localPath)
 });
 
 
-app.use(cors({
-    origin: '*', // Allow all origins (use specific domain in production)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
 
 
