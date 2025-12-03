@@ -24,7 +24,7 @@ const url="mongodb://localhost:27017"
 client.connect().then((connection)=>{
 const db=connection.db(dbName);
 
-app.get("/contact.html",async (req,resp)=>{
+app.post("/contact.html",async (req,resp)=>{
 const collection=db.collection('department')
 const  data=await collection.find().toArray()
 const absPath=path.resolve('contact.html')
@@ -105,11 +105,11 @@ console.log(imgPath)
 })
 
 
-/*app.get("/contact.html",(req,resp)=>{
+app.get("/contact.html",(req,resp)=>{
 const absPath=path.resolve('contact.html')
 resp.sendFile(absPath)
 
-})*/
+})
 
 
 app.get("/resume.html",(req,resp)=>{
