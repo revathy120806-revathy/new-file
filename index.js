@@ -6,13 +6,14 @@ import https from 'https'
 import fs from 'fs'
 import axios from 'axios'
 import { MongoClient } from 'mongodb';
-
+import cors from 'cors'
 
 
 
 
 const app=express()
 
+app.use(cors())
 
 app.use(express.urlencoded({extended:true}));
 
