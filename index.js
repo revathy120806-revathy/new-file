@@ -174,19 +174,27 @@ console.log(localPath)
 });
 
 
-const fetch = require('node-fetch');
-
-fetch('http://localhost:3200/contact.html', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: 'John Doe' })
-})
-.then(res => res.json())
-.then(console.log)
-.catch(console.error);
+app.use(cors({
+    origin: '*', // Allow all origins (use specific domain in production)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
+app.use(express.json());
 
+app.post('/update', (req, res) => {
+    const data = req.body;
+    if (!data || Object.keys(data).length === 0) {
+        return res.status(400).json({ error: 'No data provided' });
+}
+    res.json({ message: 'Data updated successfully', data });
+});
+
+
+
+
+app.options('https://revathy120806-revathy.github.io/new-file/contact.html', cors());
 
 
 
