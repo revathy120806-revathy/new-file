@@ -32,6 +32,16 @@ resp.sendFile(absPath)
 
 })
 
+app.post("/contact.html",async(req,resp)=>{
+const name=req.body.name
+const email=req.body.email
+const subject=req.body.subject
+const message=req.body.message
+const collection=db.collection('department')
+const result=await collection.insertOne({name,email,subject,message})   
+resp.redirect('/contact.html')
+})
+
 app.post("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
@@ -39,11 +49,6 @@ const subject=req.body.subject
 const message=req.body.message
 const collection=db.collection('department')
 const result=await collection.insertOne({name,email,subject,message})   
-
-
-
-resp.redirect('/contact.html')
-})
 
 
 
