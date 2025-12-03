@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.post("/contact.php",async(req,resp)=>{
+app.post("/Datasheet.html",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
