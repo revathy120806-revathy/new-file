@@ -1,7 +1,9 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url';
-import AOS from 'aos';
+
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +14,7 @@ const pathName=path.resolve('assets')
 const imgPath=path.resolve(__dirname)
 const folderName='img'
 //app.use(express.static(path.join(pathName,folderName)))
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
 
 
 app.get("/",(req,resp)=>{
