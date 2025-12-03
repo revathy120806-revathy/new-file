@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.post("/Datasheet",async(req,resp)=>{
+app.get("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
