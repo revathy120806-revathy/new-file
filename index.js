@@ -5,11 +5,78 @@ import http from 'http'
 import https from 'https'
 import fs from 'fs'
 import axios from 'axios'
+import { MongoClient } from 'mongodb';
+
+
+
+
+
+const app=express()
+
+
+app.use(express.urlencoded({extended:true}));
+
+const dbName="School"
+const url="mongodb://localhost:27017"
+ const client=new MongoClient(url);
+
+client.connect().then((connection)=>{
+const db=connection.db(dbName);
+app.get("/contact.html",async (req,resp)=>{
+const collection=db.collection('department')
+const  data=await collection.find().toArray()
+const absPath=path.resolve('contact.html')
+resp.sendFile(absPath)
+
+
+})
+
+app.post("/Datasheet",async(req,resp)=>{
+const name=req.body.name
+const email=req.body.email
+const subject=req.body.subject
+const message=req.body.message
+const collection=db.collection('department')
+const result=await collection.insertOne({name,email,subject,message})   
+
+
+
+resp.redirect('/contact.html')
+})
+
+
+
+
+})
+
+
+
+/* async function dbConnection(){
+await client.connect()
+
+const db= client.db(dbName)
+const collection= db.collection('department')
+const result=await collection.find().toArray()
+
+ console.log(result)
+
+ }
+
+
+
+dbConnection()*/
+
+
+
+
+
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app=express()
+
 app.set("view engine","ejs")
 const pathName=path.resolve('assets')
 const imgPath=path.resolve(__dirname)
@@ -31,11 +98,11 @@ console.log(imgPath)
 })
 
 
-app.get("/contact.html",(req,resp)=>{
+/*app.get("/contact.html",(req,resp)=>{
 const absPath=path.resolve('contact.html')
 resp.sendFile(absPath)
 
-})
+})*/
 
 
 app.get("/resume.html",(req,resp)=>{
