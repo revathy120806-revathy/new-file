@@ -7,7 +7,7 @@ import fs from 'fs'
 import axios from 'axios'
 import { MongoClient } from 'mongodb';
 import cors from 'cors'
-
+import fetch from 'node-fetch';
 
 
 
@@ -181,24 +181,38 @@ app.use(cors({
 }));
 
 
-app.use(express.json());
 
-app.post('/update', (req, res) => {
-    const data = req.body;
-    if (!data || Object.keys(data).length === 0) {
-        return res.status(400).json({ error: 'No data provided' });
+
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Store token in env variable
+const OWNER = 'revaty120806-revathy';
+const REPO = 'new-file';
+
+async function createIssue(title, body) {
+  try {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`, // or `Bearer` for fine-grained tokens
+        'Accept': 'application/vnd.github+json',
+        'User-Agent': 'Node.js App',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        body: body
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Issue created:', data.html_url);
+  } catch (error) {
+    console.error('Error creating issue:', error.message);
+  }
 }
-    res.json({ message: 'Data updated successfully', data });
-});
-
-
-
-
-app.options('https://revathy120806-revathy.github.io/new-file/contact.html', cors());
-
-
-
-
 
 
 
