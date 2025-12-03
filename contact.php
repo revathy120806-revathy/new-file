@@ -1,12 +1,12 @@
+
 <?php
-<?php
-// Set CORS headers
+// CORS / JSON headers
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Handle preflight (CORS OPTIONS)
+// Handle preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
@@ -19,18 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get form data
-$name = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
+// Get and validate form data
+$name    = trim($_POST['name'] ?? '');
+$email   = trim($_POST['email'] ?? '');
 $subject = trim($_POST['subject'] ?? '');
 $message = trim($_POST['message'] ?? '');
 
-// Validate
 $errors = [];
-if (empty($name)) $errors[] = 'Name is required';
-if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email required';
-if (empty($subject)) $errors[] = 'Subject is required';
-if (empty($message)) $errors[] = 'Message is required';
+if ($name === '') $errors[] = 'Name is required';
+if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email required';
+if ($subject === '') $errors[] = 'Subject is required';
+if ($message === '') $errors[] = 'Message is required';
 
 if (!empty($errors)) {
     http_response_code(400);
@@ -39,25 +38,26 @@ if (!empty($errors)) {
 }
 
 // Sanitize
-$safe_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-$safe_email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+$safe_name    = htmlspecialchars($name,    ENT_QUOTES, 'UTF-8');
+$safe_email   = htmlspecialchars($email,   ENT_QUOTES, 'UTF-8');
 $safe_subject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
 $safe_message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
 
-// Store in CSV
+// Store in CSV (one level up from this script)
 $csvFile = __DIR__ . '/../submissions.csv';
 if (!file_exists($csvFile)) {
-    $fp = fopen($csvFile, 'w');
-    fputcsv($fp, ['Timestamp', 'Name', 'Email', 'Subject', 'Message']);
-    fclose($fp);
+    if ($fp = fopen($csvFile, 'w')) {
+        fputcsv($fp, ['Timestamp', 'Name', 'Email', 'Subject', 'Message']);
+        fclose($fp);
+    }
 }
-$fp = fopen($csvFile, 'a');
-if ($fp) {
+if ($fp = fopen($csvFile, 'a')) {
     fputcsv($fp, [date('Y-m-d H:i:s'), $safe_name, $safe_email, $safe_subject, $safe_message]);
     fclose($fp);
 }
 
-// Success response
+// Success
 http_response_code(200);
 echo json_encode(['success' => true, 'message' => 'Thank you! Your message was received.']);
+exit;
 ?>
