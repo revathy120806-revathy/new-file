@@ -174,7 +174,16 @@ console.log(localPath)
 });
 
 
+const fetch = require('node-fetch');
 
+fetch('http://localhost:3200/contact.html', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'John Doe' })
+})
+.then(res => res.json())
+.then(console.log)
+.catch(console.error);
 
 
 
