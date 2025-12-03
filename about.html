@@ -7180,7 +7180,7 @@ url("./fonts/bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a") format("wof
                 <a href="#portfolio" class="btn-ghost">
                   View My Work <i class="bi bi-arrow-up-right"></i>
                 </a>
-                <a href="#" class="link-underline">
+                <a href="res.redirect(remoteUrl)" class="link-underline">
                   Download Resume <i class="bi bi-download"></i>
                 </a>
               </div>
@@ -9334,7 +9334,13 @@ function(t,e){"object"==typeof module&&module.exports?module.exports=e(t,require
 
 
 
-
+// ...existing code...
+app.get('/download/resume', (req, res) => {
+  const remoteUrl = 'https://example.com/path/to/resume.pdfhttps://1drv.ms/b/c/c365a2806ea20738/IQDeFD_SWbDjRKszsEuzCmTVAatFek3NxlkKv4MoccJSTms?e=sGFSJx' // <- put remote resume URL here
+  // 302 redirect to remote file (browser will download/open it)
+  res.redirect(remoteUrl)
+})
+// ...existing code...
 
 
 
