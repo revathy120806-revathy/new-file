@@ -55,7 +55,7 @@ const result=await collection.insertOne({name,email,subject,message})
 
 })
 
-
+})
 
 /* async function dbConnection(){
 await client.connect()
