@@ -61,14 +61,14 @@ resp.sendFile(absPath)
 
 app.get('/download', async (req, res) => {
     const fileUrl = 'https://1drv.ms/b/c/c365a2806ea20738/IQDeFD_SWbDjRKszsEuzCmTVAatFek3NxlkKv4MoccJSTms?e=VoJIck'; // Replace with your PDF URL
-    const localPath = path.join(__dirname, 'Resume.pdf');
-
+    const localPath = path.join(__dirname, 'downloaded.pdf');
+console.log(localPath)
     try {
         // Fetch PDF with headers to avoid 403
         const response = await axios.get(fileUrl, {
             responseType: 'stream',
             headers: {
-                'User-Agent': 'Microsoft Edge/142.0.3595.94', // Some servers require this
+                'User-Agent': 'Norton Private Browser/ 142.0.33025.177', // Some servers require this
                 // 'Authorization': 'Bearer YOUR_TOKEN', // If needed
                 // 'Cookie': 'session=abc123', // If needed
             }
