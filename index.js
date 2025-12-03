@@ -33,15 +33,18 @@ resp.sendFile(absPath)
 
 })
 
-app.get("/Datasheet",async(req,resp)=>{
+app.post("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
 const message=req.body.message
 const collection=db.collection('department')
-const result=await collection.insertOne({name,email,subject,message})   
-resp.send('Datasheet.html')
+const result=await collection.insertOne({name,email,subject,message})  
+const absPath=path.resolve('Datasheet.html') 
+resp.sendFile(absPath)
+
 })
+
 
 
 
