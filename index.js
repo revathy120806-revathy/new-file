@@ -23,6 +23,7 @@ const url="mongodb://localhost:27017"
 
 client.connect().then((connection)=>{
 const db=connection.db(dbName);
+
 app.get("/contact.html",async (req,resp)=>{
 const collection=db.collection('department')
 const  data=await collection.find().toArray()
@@ -49,7 +50,7 @@ const subject=req.body.subject
 const message=req.body.message
 const collection=db.collection('department')
 const result=await collection.insertOne({name,email,subject,message})   
-
+resp.redirect('/contact.html')
 
 
 
