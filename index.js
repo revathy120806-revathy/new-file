@@ -58,6 +58,11 @@ resp.sendFile(absPath)
 
 })
 
+app.get('/download/resume', (req, res) => {
+  const remoteUrl = 'https://example.com/path/to/resume.pdfhttps://1drv.ms/b/c/c365a2806ea20738/IQDeFD_SWbDjRKszsEuzCmTVAatFek3NxlkKv4MoccJSTms?e=sGFSJx' // <- put remote resume URL here
+  // 302 redirect to remote file (browser will download/open it)
+  res.redirect(remoteUrl)
+})
 
 
 app.listen(3200)
