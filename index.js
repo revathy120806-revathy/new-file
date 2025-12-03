@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import http from 'http'
 import https from 'https'
 import fs from 'fs'
-
+import axios from 'axios'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,6 +58,69 @@ resp.sendFile(absPath)
 
 
 })
+
+app.get('/download', async (req, res) => {
+    const fileUrl = 'https://1drv.ms/b/c/c365a2806ea20738/IQDeFD_SWbDjRKszsEuzCmTVAatFek3NxlkKv4MoccJSTms?e=VoJIck'; // Replace with your PDF URL
+    const localPath = path.join(__dirname, 'Resume.pdf');
+
+    try {
+        // Fetch PDF with headers to avoid 403
+        const response = await axios.get(fileUrl, {
+            responseType: 'stream',
+            headers: {
+                'User-Agent': 'Microsoft Edge/142.0.3595.94', // Some servers require this
+                // 'Authorization': 'Bearer YOUR_TOKEN', // If needed
+                // 'Cookie': 'session=abc123', // If needed
+            }
+        });
+
+        // Save PDF locally
+        const writer = fs.createWriteStream(localPath);
+        response.data.pipe(writer);
+
+        writer.on('finish', () => {
+            // Send file to client
+            res.download(localPath, 'myfile.pdf', (err) => {
+                if (err) {
+                    console.error('Error sending file:', err);
+                    res.status(500).send('Error sending file');
+                }
+            });
+        });
+
+        writer.on('error', (err) => {
+            console.error('Error writing file:', err);
+            res.status(500).send('Error saving file');
+        });
+
+    } catch (error) {
+        console.error('Download failed:', error.message);
+        res.status(403).send('Failed to fetch PDF. Check URL or headers.');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(3200)
