@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.all("/Datasheet",async(req,resp)=>{
+app.get("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
@@ -43,7 +43,7 @@ const result=await collection.insertOne({name,email,subject,message})
 resp.redirect('/contact.html')
 })
 
-app.all("/Datasheet",async(req,resp)=>{
+app.get("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
