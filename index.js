@@ -24,7 +24,7 @@ const url="mongodb://localhost:27017"
 client.connect().then((connection)=>{
 const db=connection.db(dbName);
 
-app.post("/contact.html",async (req,resp)=>{
+app.get("/contact.html",async (req,resp)=>{
 const collection=db.collection('department')
 const  data=await collection.find().toArray()
 const absPath=path.resolve('contact.html')
@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.post("/Datasheet",async(req,resp)=>{
+app.all("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
@@ -43,7 +43,7 @@ const result=await collection.insertOne({name,email,subject,message})
 resp.redirect('/contact.html')
 })
 
-app.post("/Datasheet",async(req,resp)=>{
+app.all("/Datasheet",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
