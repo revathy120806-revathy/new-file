@@ -3,7 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import http from 'http'
 import https from 'https'
-
+import fs from 'fs'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -58,32 +58,6 @@ resp.sendFile(absPath)
 
 
 })
-
-app.get('/download/resume', (req, res) => {
-  const remoteUrl = 'https://1drv.ms/b/c/c365a2806ea20738/IQDeFD_SWbDjRKszsEuzCmTVAatFek3NxlkKv4MoccJSTms?e=dxvw6y' // <- put remote resume URL here
-  // 302 redirect to remote file (browser will download/open it)
-  res.redirect(remoteUrl)
-})
-
-app.get('/download/resume', (req, res) => {
-  const remoteUrl = 'https://example.com/path/to/resume.pdf' // <- put remote resume URL here
-  const urlObj = new URL(remoteUrl)
-  const client = urlObj.protocol === 'https:' ? https : http
-
-  client.get(urlObj, (remoteRes) => {
-    if (remoteRes.statusCode !== 200) {
-      res.status(remoteRes.statusCode).send('Remote file not available')
-      return
-    }
-    res.setHeader('Content-Disposition', 'attachment; filename="Resume.pdf"')
-    res.setHeader('Content-Type', remoteRes.headers['content-type'] || 'application/pdf')
-    remoteRes.pipe(res)
-  }).on('error', (err) => {
-    console.error('Resume proxy error:', err)
-    res.status(500).send('Download error')
-  })
-})
-// ...existing code...
 
 
 app.listen(3200)
