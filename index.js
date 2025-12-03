@@ -33,7 +33,7 @@ resp.sendFile(absPath)
 
 })
 
-app.post("/Datasheet",async(req,resp)=>{
+app.post("/contact.php",async(req,resp)=>{
 const name=req.body.name
 const email=req.body.email
 const subject=req.body.subject
@@ -42,6 +42,9 @@ const collection=db.collection('department')
 const result=await collection.insertOne({name,email,subject,message})  
 const absPath=path.resolve('Datasheet.html') 
 resp.sendFile(absPath)
+
+
+
 
 })
 
@@ -173,47 +176,14 @@ console.log(localPath)
 
 
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Store token in env variable
-const OWNER = 'revaty120806-revathy';
-const REPO = 'new-file';
-
-async function createIssue(title, body) {
-  try {
-    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `token ${GITHUB_TOKEN}`, // or `Bearer` for fine-grained tokens
-        'Accept': 'application/vnd.github+json',
-        'User-Agent': 'Node.js App',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: title,
-        body: body
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Issue created:', data.html_url);
-  } catch (error) {
-    console.error('Error creating issue:', error.message);
-  }
-}
 
 
 
 
 
+const data=path.resolve('contact.php')
 
-
-
-
-
-
+console.log(data)
 
 
 
